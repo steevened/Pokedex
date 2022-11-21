@@ -4,14 +4,14 @@ const Stats = ({ pokemon }) => {
   const { stats } = pokemon
   // console.log(stats)
   return (
-    <div className=' mt-28 w-11/12 mx-auto'>
+    <div className=' mt-12 w-11/12 mx-auto'>
       <ul className='container rounded-md mx-auto px-5 pt-28 py-9 bg-base-300 flex flex-col gap-3 relative'>
-        <figure className='w-56 mx-auto absolute -translate-x-1/2 -translate-y-1/2  -top-5 left-1/2 hover:scale-110 transition-all duration-300'>
+        <figure className='w-56 mx-auto absolute -translate-x-1/2 -translate-y-1/2  top-1 left-1/2 hover:scale-110 transition-all duration-300'>
           <img src={pokemon?.sprites?.other.home.front_default} alt='pokemon' />
         </figure>
         <h2 className='text-3xl font-bold text-center mb-1'>Stats</h2>
 
-        <div className='flex text-xl md:text-2xl justify-between mx-4 relative after:absolute after:w-[1px] after:top-4 after:bottom-4 after:bg-primary after:left-1/2 px-5 py-5 '>
+        <div className='flex text-xl md:text-2xl justify-between mx-4 relative after:absolute after:w-[4px] after:top-4 after:bottom-4 after:bg-base-100 after:left-1/2 px-5 py-5 '>
           <div>
             <span className='font-bold'>Weight:</span> {pokemon.weight}
           </div>

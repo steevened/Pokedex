@@ -9,7 +9,7 @@ function PokedexCard({ url }) {
     axios.get(url).then((res) => setPokemon(res.data))
   }, [])
 
-  console.log(pokemon)
+  // console.log(pokemon)
   return (
     <div className='card card-compact card-side bg-base-200 shadow-lg shadow-base-100'>
       {pokemon?.sprites?.other.home ? (
