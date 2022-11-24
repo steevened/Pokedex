@@ -1,11 +1,27 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 
 const HandleTheme = () => {
+  const [theme, setTheme] = useState('light')
+
+  useEffect(() => {
+    if (theme === 'dark') {
+      document.documentElement.classList.add('dark')
+    } else {
+      document.documentElement.classList.remove('dark')
+    }
+  }, [theme])
+
+  const switchTheme = () => {
+    setTheme(theme === 'dark' ? 'light' : 'dark')
+  }
+
+  console.log(theme)
+
   return (
     <div className='fixed z-30 bottom-5 p-5 right-5 w-7 h-7 grid place-content-center '>
-      <button className='btn btn-ghost btn-circle'>
+      <button className='btn btn-ghost btn-circle dark:text-lNeutral'>
         <label className='swap swap-rotate'>
-          <input type='checkbox' />
+          <input type='checkbox' onChange={switchTheme} />
 
           <svg
             className='swap-on fill-current w-7 h-7'

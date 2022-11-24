@@ -5,7 +5,7 @@ const ProtectedRoutes = () => {
   const userName = useSelector((state) => state.name)
   console.log(userName)
 
-  if (userName) {
+  if (userName.length > 5) {
     return <Outlet />
   } else {
     return <Navigate to='/' />

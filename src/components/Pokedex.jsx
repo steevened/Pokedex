@@ -61,26 +61,12 @@ const Pokedex = () => {
 
   return (
     <div className='w-full  h-full pt-24'>
-      <h1 className='text-6xl font-bold text-center'>
+      <h1 className='text-6xl font-bold text-center '>
         {name ? `Hello ${name[0].toUpperCase()}${name.slice(1)}` : 'Hello'}
       </h1>
-      <h3 className='text-3xl text-center mt-4'>Choose your pokedex</h3>
-      <div className=' flex flex-col gap-3 my-5'>
-        <h2 className='text-xl block text-center'>Search by</h2>
-        {/* start of input */}
-        <div className='flex items-center justify-center gap-3'>
-          <span className='text-primary'>Name</span>
-          <input
-            type='checkbox'
-            className='toggle toggle-md rounded-none'
-            onChange={() => setToggleBar(!toggleBar)}
-          />
+      <h3 className='text-3xl text-center mt-5'>Choose your pokedex</h3>
 
-          <span className='text-secondary'>Type</span>
-        </div>
-        {/* end of input */}
-      </div>
-      <div className='form-control  py-5 grid place-content-center gap-3'>
+      <div className='form-control mt-6  py-5 grid place-content-center gap-3'>
         {toggleBar ? (
           <form>
             <div className='input-group'>
@@ -89,7 +75,8 @@ const Pokedex = () => {
                 value={searchPokemon}
                 type='text'
                 placeholder='Search…'
-                className='input bg-base-300 focus:input-bordered focus:outline-none'
+                className='input bg-base-300 focus:input-bordered focus:outline-none
+                placeholder:text-neutral-content placeholder:font-bold placeholder:text-sm'
               />
               <button className='btn btn-square' onClick={searchPokeBtn}>
                 <svg
@@ -113,7 +100,7 @@ const Pokedex = () => {
           <div className='w-[336px] '>
             <select
               onChange={filterType}
-              className='select w-full bg-base-300 focus:outline-none '
+              className='select w-full bg-base-300 focus:outline-none'
             >
               <option disabled selected>
                 Search by type
@@ -126,6 +113,21 @@ const Pokedex = () => {
             </select>
           </div>
         )}
+      </div>
+
+      <div className=' flex flex-col gap-3 mb-10'>
+        {/* start of input */}
+        <div className='flex  items-center justify-center gap-3'>
+          <span className='text-primary'>Name</span>
+          <input
+            type='checkbox'
+            className='toggle toggle-md rounded-none'
+            onChange={() => setToggleBar(!toggleBar)}
+          />
+
+          <span className='text-secondary'>Type</span>
+        </div>
+        {/* end of input */}
       </div>
       <ul className='grid md:container md:mx-auto grid-cols-1 md:grid-cols-2 lg:grid-cols-3 mx-5 gap-5 mt-8'>
         {pokemons?.map((pokemon) => (

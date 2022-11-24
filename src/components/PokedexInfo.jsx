@@ -1,6 +1,6 @@
 import axios from 'axios'
 import React, { useState } from 'react'
-import { useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import Abilities from './Abilities'
 import Movements from './Movements'
 import Stats from './Stats'
@@ -9,6 +9,7 @@ import Types from './Types'
 const PokedexInfo = () => {
   const { id } = useParams()
   const [pokemon, setPokemon] = useState({})
+  const navigate = useNavigate()
 
   useState(() => {
     axios
@@ -19,7 +20,14 @@ const PokedexInfo = () => {
   // console.log(pokemon)
 
   return (
-    <div className='w-full h-full pt-24'>
+    <div className='w-full h-full pt-24 relative'>
+      <div
+        className='btn btn-ghost btn-circle absolute top-20 left-[5%]'
+        onClick={() => navigate(-1)}
+      >
+        <i className='fa-solid fa-chevron-left text-xl'></i>
+      </div>
+
       <h1 className='text-6xl text-center font-bold py-10'>
         {pokemon.name?.[0].toUpperCase()}
         {pokemon.name?.slice(1)}
