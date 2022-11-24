@@ -11,9 +11,9 @@ function PokedexCard({ url }) {
 
   // console.log(pokemon)
   return (
-    <div className='card card-compact card-side bg-base-200 shadow-lg shadow-base-100'>
+    <div className='card card-compact card-side bg-base-200 dark:bg-lBase200 shadow-lg shadow-base-100 dark:shadow-black/30'>
       {pokemon?.sprites?.other.home ? (
-        <figure className=' w-32 bg-primary rounded-full p-5 m-5'>
+        <figure className=' w-32 bg-primary dark:bg-lPrimary rounded-full p-5 m-5'>
           <img
             loading='lazy'
             src={pokemon?.sprites?.other.home.front_default}
@@ -27,7 +27,7 @@ function PokedexCard({ url }) {
       )}
 
       <div className='card-body  h-auto  items-center justify-center'>
-        <div className='card-title text-2xl'>
+        <div className='card-title text-2xl dark:text-lNeutral'>
           <h2>
             {pokemon.name?.[0].toUpperCase()}
             {pokemon.name?.slice(1)}
@@ -37,7 +37,7 @@ function PokedexCard({ url }) {
         <div className='card-actions'>
           <Link
             to={`/pokedex/${pokemon.id}`}
-            className='btn btn-sm rounded-none'
+            className='btn btn-sm rounded-none border-none dark:bg-lbaseContent'
           >
             <h3>View</h3>
           </Link>

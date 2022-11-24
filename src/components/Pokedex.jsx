@@ -61,10 +61,12 @@ const Pokedex = () => {
 
   return (
     <div className='w-full  h-full pt-24'>
-      <h1 className='text-6xl font-bold text-center '>
+      <h1 className='text-6xl font-bold text-center dark:text-lbaseContent'>
         {name ? `Hello ${name[0].toUpperCase()}${name.slice(1)}` : 'Hello'}
       </h1>
-      <h3 className='text-3xl text-center mt-5'>Choose your pokedex</h3>
+      <h3 className='text-3xl text-center mt-5 dark:text-lbaseContent'>
+        Choose your pokedex
+      </h3>
 
       <div className='form-control mt-6  py-5 grid place-content-center gap-3'>
         {toggleBar ? (
@@ -74,11 +76,14 @@ const Pokedex = () => {
                 onChange={(e) => setSearchPokemon(e.target.value)}
                 value={searchPokemon}
                 type='text'
-                placeholder='Search…'
-                className='input bg-base-300 focus:input-bordered focus:outline-none
-                placeholder:text-neutral-content placeholder:font-bold placeholder:text-sm'
+                placeholder='Search by name…'
+                className='input bg-base-300 dark:bg-lBase300 focus:input-bordered focus:outline-none
+                placeholder:text-neutral-content dark:placeholder:text-lNeutral/50 placeholder:font-bold placeholder:text-sm dark:text-lNeutral'
               />
-              <button className='btn btn-square' onClick={searchPokeBtn}>
+              <button
+                className='btn btn-square dark:bg-lBase200 border-none dark:text-lNeutral/50'
+                onClick={searchPokeBtn}
+              >
                 <svg
                   xmlns='http://www.w3.org/2000/svg'
                   className='h-6 w-6'
@@ -97,13 +102,13 @@ const Pokedex = () => {
             </div>
           </form>
         ) : (
-          <div className='w-[336px] '>
+          <div className='w-[336px] dark:text-lNeutral/50'>
             <select
               onChange={filterType}
-              className='select w-full bg-base-300 focus:outline-none'
+              className='select w-full bg-base-300  dark:bg-lBase300 focus:outline-none'
             >
-              <option disabled selected>
-                Search by type
+              <option disabled selected className=' '>
+                Search by type...
               </option>
               {types.map((type) => (
                 <option value={type.url} key={type.url}>
@@ -118,14 +123,14 @@ const Pokedex = () => {
       <div className=' flex flex-col gap-3 mb-10'>
         {/* start of input */}
         <div className='flex  items-center justify-center gap-3'>
-          <span className='text-primary'>Name</span>
+          <span className='text-primary dark:text-lPrimary'>Name</span>
           <input
             type='checkbox'
-            className='toggle toggle-md rounded-none'
+            className='toggle toggle-md rounded-none dark:bg-lBase300'
             onChange={() => setToggleBar(!toggleBar)}
           />
 
-          <span className='text-secondary'>Type</span>
+          <span className='text-secondary dark:text-lSecondary'>Type</span>
         </div>
         {/* end of input */}
       </div>
@@ -141,11 +146,11 @@ const Pokedex = () => {
       <ReactPaginate
         previousLabel={'previous'}
         containerClassName='btn-group w-100 flex justify-center mx-auto my-10'
-        activeLinkClassName='btn btn-primary'
-        breakLinkClassName='btn btn-disabled'
-        previousLinkClassName='btn btn-ghost rounded-none'
-        nextLinkClassName='btn btn-ghost rounded-none'
-        pageLinkClassName='btn rounded-none'
+        activeLinkClassName='btn btn-primary dark:btn-lPrimary'
+        breakLinkClassName='btn btn-disabled dark:text-lNeutral rounded-none'
+        previousLinkClassName='btn btn-ghost dark:text-lNeutral rounded-none'
+        nextLinkClassName='btn btn-ghost rounded-none dark:text-lNeutral'
+        pageLinkClassName='btn rounded-none dark:bg-lbaseContent border-none'
         nextLabel={'next'}
         breakLabel={'...'}
         pageCount={Math.ceil(pages / page)}

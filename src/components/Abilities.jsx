@@ -7,13 +7,13 @@ const Abilities = ({ pokemon }) => {
   return (
     <Card>
       <div>
-        <h2 className='text-3xl font-bold'>Abilities</h2>
+        <h2 className='text-3xl font-bold dark:text-lbaseContent'>Abilities</h2>
       </div>
       <ul className='text-2xl mt-2 mx-4 flex flex-col gap-2 font-bold'>
         {abilities?.map((ability) => (
           <li
             key={ability?.ability.url}
-            className='text-primary bg-base-100 py-2 rounded-md mx-3'
+            className='text-primary bg-base-100 py-2 rounded-md mx-3 dark:text-lPrimary  dark:bg-lBase100'
           >
             <h2>
               {ability?.ability.name[0].toUpperCase()}
