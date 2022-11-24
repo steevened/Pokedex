@@ -3,25 +3,41 @@ import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import PokedexCard from './PokedexCard'
+import ReactPaginate from 'react-paginate'
 
 const Pokedex = () => {
   const name = useSelector((state) => state.name)
+
+  const [pages, setPages] = useState([])
+  const [typePages, setTypePages] = useState([])
   const [pokemons, setPokemons] = useState([])
   const [types, setTypes] = useState([])
   const [searchPokemon, setSearchPokemon] = useState('')
-  const [toggleBar, setToggleBar] = useState(false)
+  const [toggleBar, setToggleBar] = useState(true)
+  const [page, setPage] = useState(20)
+  const [offset, setOffset] = useState(0)
 
   const navigate = useNavigate()
 
-  useEffect(() => {
-    axios
-      .get('https://pokeapi.co/api/v2/pokemon/')
-      .then((res) => setPokemons(res.data.results))
+  useEffect(
+    () => {
+      axios
+        .get(`https://pokeapi.co/api/v2/pokemon/`)
+        .then((res) => setPages(res.data.count))
 
-    axios
-      .get('https://pokeapi.co/api/v2/type/')
-      .then((res) => setTypes(res.data.results))
-  }, [])
+      axios
+        .get(
+          `https://pokeapi.co/api/v2/pokemon/?limit=${page}&offset=${offset}`
+        )
+        .then((res) => setPokemons(res.data.results))
+
+      axios
+        .get(`https://pokeapi.co/api/v2/type/`)
+        .then((res) => setTypes(res.data.results))
+    },
+    [offset],
+    []
+  )
 
   const searchPokeBtn = () => {
     navigate(`/pokedex/${searchPokemon.toLowerCase()}`)
@@ -29,10 +45,19 @@ const Pokedex = () => {
 
   const filterType = (e) => {
     const url = e.target.value
-    axios.get(url).then((res) => setPokemons(res.data.pokemon))
+    setOffset(0)
+    axios.get(`${url}?limit=20&offset=20`).then((res) => {
+      setPokemons(res.data.pokemon)
+      setPages(res.data.pokemon.length)
+    })
   }
 
-  // console.log(toggleBar)
+  const handlePageClick = (data) => {
+    const selected = data.selected
+    setOffset(selected * page)
+  }
+
+  // console.log(offset)
 
   return (
     <div className='w-full  h-full pt-24'>
@@ -42,22 +67,18 @@ const Pokedex = () => {
       <h3 className='text-3xl text-center mt-4'>Choose your pokedex</h3>
       <div className=' flex flex-col gap-3 my-5'>
         <h2 className='text-xl block text-center'>Search by</h2>
+        {/* start of input */}
         <div className='flex items-center justify-center gap-3'>
           <span className='text-primary'>Name</span>
           <input
-            type='radio'
-            name='radio-2'
-            className='radio radio-primary'
-            onChange={() => setToggleBar(true)}
+            type='checkbox'
+            className='toggle toggle-md rounded-none'
+            onChange={() => setToggleBar(!toggleBar)}
           />
-          <input
-            type='radio'
-            name='radio-2'
-            className='radio radio-secondary'
-            onChange={() => setToggleBar(false)}
-          />
+
           <span className='text-secondary'>Type</span>
         </div>
+        {/* end of input */}
       </div>
       <div className='form-control  py-5 grid place-content-center gap-3'>
         {toggleBar ? (
@@ -107,7 +128,7 @@ const Pokedex = () => {
         )}
       </div>
       <ul className='grid md:container md:mx-auto grid-cols-1 md:grid-cols-2 lg:grid-cols-3 mx-5 gap-5 mt-8'>
-        {pokemons.map((pokemon) => (
+        {pokemons?.map((pokemon) => (
           <li key={pokemon.url ? pokemon.url : pokemon.pokemon.url}>
             <PokedexCard
               url={pokemon.url ? pokemon.url : pokemon.pokemon.url}
@@ -115,6 +136,21 @@ const Pokedex = () => {
           </li>
         ))}
       </ul>
+      <ReactPaginate
+        previousLabel={'previous'}
+        containerClassName='btn-group w-100 flex justify-center mx-auto my-10'
+        activeLinkClassName='btn btn-primary'
+        breakLinkClassName='btn btn-disabled'
+        previousLinkClassName='btn btn-ghost rounded-none'
+        nextLinkClassName='btn btn-ghost rounded-none'
+        pageLinkClassName='btn rounded-none'
+        nextLabel={'next'}
+        breakLabel={'...'}
+        pageCount={Math.ceil(pages / page)}
+        marginPagesDisplayed={2}
+        pageRangeDisplayed={3}
+        onPageChange={handlePageClick}
+      />
     </div>
   )
 }
