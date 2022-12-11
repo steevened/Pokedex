@@ -4,10 +4,11 @@ import { useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import PokedexCard from './PokedexCard'
 import ReactPaginate from 'react-paginate'
+import PokeSearch from './PokeSearch'
 
 const Pokedex = () => {
   const name = useSelector((state) => state.name)
-
+  const [totalPokes, setTotalPokes] = useState([])
   const [pages, setPages] = useState(null)
   const [typePages, setTypePages] = useState([])
   const [pokemons, setPokemons] = useState([])
@@ -17,6 +18,8 @@ const Pokedex = () => {
   const [page, setPage] = useState(20)
   const [offset, setOffset] = useState(0)
   const [width, setWidth] = useState(window.innerWidth)
+  const [IsSearchBarVisible, setIsSearchBarVisible] = useState(false)
+  const [selected, isSelected] = useState(false)
 
   const updateDimensions = () => {
     setWidth(window.innerWidth)
@@ -27,12 +30,16 @@ const Pokedex = () => {
     return () => window.removeEventListener('resize', updateDimensions)
   }, [])
 
-  console.log(width)
+  // console.log(totalPokes)
 
   const navigate = useNavigate()
 
   useEffect(
     () => {
+      axios
+        .get(`https://pokeapi.co/api/v2/pokemon/?limit=10`)
+        .then((res) => setTotalPokes(res.data.results))
+
       axios
         .get(`https://pokeapi.co/api/v2/pokemon/`)
         .then((res) => setPages(res.data.count))
@@ -131,7 +138,7 @@ const Pokedex = () => {
             </select>
           </div>
         )} */}
-        <form>
+        <form className="relative">
           <div className="input-group">
             <input
               onChange={(e) => setSearchPokemon(e.target.value)}
@@ -160,6 +167,24 @@ const Pokedex = () => {
                 />
               </svg>
             </button>
+          </div>
+          <div
+            className={`${
+              searchPokemon
+                ? 'z-50  bg-primary/50 min-h-[100px] h-full  absolute overflow-auto left-0 right-0'
+                : 'hidden'
+            }`}
+          >
+            {searchPokemon &&
+              totalPokes.map((pokeName) => (
+                <PokeSearch
+                  pokeName={pokeName}
+                  key={pokeName.id}
+                  searchPokemon={searchPokemon}
+                  setIsSearchBarVisible={setIsSearchBarVisible}
+                  IsSearchBarVisible={IsSearchBarVisible}
+                />
+              ))}
           </div>
         </form>
       </div>
